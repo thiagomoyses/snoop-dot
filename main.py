@@ -7,7 +7,8 @@ if __name__ == '__main__':
 
     title = figlet_format("IP-SNIFFER", font="starwars", width=200)
     print(Fore.GREEN + title + Style.RESET_ALL)
-    print(Fore.RED + "Created by: Thiago da Silva Moyses" + Style.RESET_ALL)
+    print(Fore.BLUE + "Created by:" + Fore.RED + " Thiago da Silva Moyses" + Style.RESET_ALL)
+    print(Fore.BLUE + "GitHub: " + Fore.GREEN + "https://github.com/thiagomoyses" + Style.RESET_ALL)
     print()
 
     # Configura o argparse para receber o prefixo completo de IP como argumento

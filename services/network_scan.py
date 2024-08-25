@@ -1,5 +1,6 @@
 import platform
 import subprocess
+import datetime
 from re import findall
 
 class Scan:
@@ -61,8 +62,13 @@ class Scan:
 
 
         # Save Ips in a txt
+        path = "./resources/results/"
+        file_name = f"active_ip_list-{datetime.datetime.now()}.txt"
+
+        final_path = path + file_name.replace(" ", "-").replace(":", "-")
+
         if active_ips:
-            with open("active_ip_list.txt", "w") as f:
+            with open(final_path, "w") as f:
                 for ip in active_ips:
                     f.write(f"{ip}\n")
             print(f"{len(active_ips)} Active IP(s) saved in -> active_ip_list.txt")
