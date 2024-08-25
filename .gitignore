@@ -1,0 +1,48 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribuição
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Instalação de pacotes pela distribuição de pacotes
+.eggs/
+*.egg-info/
+.installed.cfg
+*.egg-info/
+
+# Arquivos do instalador de Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Distribuição na plataforma Windows
+Thumbs.db
+Desktop.ini
+*.log
+
+# Arquivos gerados por editores/IDEs
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Ambiente virtual
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Arquivos de configuração de ambientes
+*.env
+.env
+*.envrc
+.envrc
