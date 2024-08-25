@@ -4,8 +4,9 @@ import datetime
 from re import findall
 
 class Scan:
-    def __init__(self, base_ip):
+    def __init__(self, base_ip, output):
         self.base_ip = base_ip
+        self.output = output
     
     @staticmethod
     def ping_ip(ip):
@@ -60,17 +61,16 @@ class Scan:
                 if self.ping_ip(ip):
                     active_ips.append(ip)
 
+        print(f"{len(active_ips) } active IP(s) found.")
 
         # Save Ips in a txt
-        path = "./resources/results/"
-        file_name = f"active_ip_list-{datetime.datetime.now()}.txt"
+        if active_ips and self.output:
 
-        final_path = path + file_name.replace(" ", "-").replace(":", "-")
+            #Create name for file
+            file_name = f"active_ip_list-{datetime.datetime.now()}.txt"
+            file_name = file_name.replace(" ", "-").replace(":", "-")
 
-        if active_ips:
-            with open(final_path, "w") as f:
+            with open(file_name, "w") as f:
                 for ip in active_ips:
                     f.write(f"{ip}\n")
-            print(f"{len(active_ips)} Active IP(s) saved in -> active_ip_list.txt")
-        else:
-            print("No active IP found.")
+            print(f"Saved in -> {file_name}")
