@@ -20,14 +20,15 @@ if __name__ == '__main__':
     parser.add_argument("--output", help="Output the scan results to a file")
     args = parser.parse_args()
 
-    if args.output == 'true':
-        output_file = True
-    elif args.output == 'false':
-        output_file = False
-    else:
-        print(Fore.RED + "Invalid value for --output. Accepted values are 'true' or 'false'." + Style.RESET_ALL)
-        parser.print_help()
-        sys.exit(1)
+    if args.output:
+        if args.output == 'true':
+            output_file = True
+        elif args.output == 'false':
+            output_file = False
+        else:
+            print(Fore.RED + "Invalid value for --output. Accepted values are 'true' or 'false'." + Style.RESET_ALL)
+            parser.print_help()
+            sys.exit(1)
         
 
     scanner = Scan(args.base_ip, output_file)
