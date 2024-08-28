@@ -3,7 +3,7 @@ import subprocess
 import datetime
 import json
 from pathlib import Path
-from re import findall
+from re import search
 
 class Scan:
     def __init__(self, base_ip, output):
@@ -16,6 +16,7 @@ class Scan:
 
         param = "-n" if platform.system().lower() == "windows" else "-c"
         ttl_data = ""
+        ttl_value = None
         output = False
 
         command = ["ping", param, "1", ip]
@@ -24,11 +25,14 @@ class Scan:
 
 
         for line in response.stdout:
-            ttl_data = ttl_data + str(line)
-            find_ttl = findall("TTL", ttl_data)
+            ttl_data += str(line, 'utf-8')
+            ttl_match = search(r"TTL=(\d+)", ttl_data)
+
+            if ttl_match:
+                ttl_value = ttl_match.group(1)
 
 
-        if find_ttl:
+        if ttl_value:
             status = "Ativo"
             status_char = "✔"
             output = True
@@ -38,7 +42,7 @@ class Scan:
         
         print(f"{status_char} {status}")
         
-        return output
+        return [output, ttl_value]
 
     def scan_network(self):
         
@@ -55,13 +59,21 @@ class Scan:
             for i in range(0, 256):
                 for j in range(1, 256):
                     ip = f"{prefix}.{i}.{j}"
-                    if self.ping_ip(ip):
-                        active_ips.append(ip)
+                    check_ip = self.ping_ip(ip)
+
+                    if check_ip[0]:
+                        ip_info = f"IP: {ip} <--> Possible(s) OS: {check_ip[1]}"
+                        active_ips.append(ip_info)
         else:
-            for i in range(0,256):
+            for i in range(0,3):
                 ip = f"{prefix}.{i}"
-                if self.ping_ip(ip):
-                    active_ips.append(ip)
+                check_ip = self.ping_ip(ip)
+
+                print(check_ip[0])
+
+                if check_ip[0]:
+                    ip_info = f"IP: {ip} <--> Possible(s) OS: {check_ip[1]}"
+                    active_ips.append(ip_info)
 
         print(f"{len(active_ips) } active IP(s) found.")
 
@@ -90,10 +102,10 @@ class Scan:
             if TTL == key:
                 for os_name in value:
                     response = response + f"{os_name} / "
-        
-        return response[:-3]
-        
 
-# if __name__ == '__main__':
-#     runner = Scan('rdgy', True)
-#     print(runner.device_identifier('64'))
+        if response == "":
+            response = "No possible OS found"
+        else:
+            response = response[:-3]
+        
+        return response
