@@ -1,6 +1,8 @@
 import platform
 import subprocess
 import datetime
+import json
+from pathlib import Path
 from re import findall
 
 class Scan:
@@ -74,3 +76,24 @@ class Scan:
                 for ip in active_ips:
                     f.write(f"{ip}\n")
             print(f"Saved in -> {file_name}")
+
+    def device_identifier(self, TTL):
+        
+        project_root = Path(__file__).resolve().parent.parent
+        ttl_list_path = project_root/"resources"/"ttl_list.json"
+        response = ""
+
+        with open(ttl_list_path, 'r') as file:
+            ttl_list = json.load(file)
+
+        for key, value in ttl_list.items():
+            if TTL == key:
+                for os_name in value:
+                    response = response + f"{os_name} / "
+        
+        return response[:-3]
+        
+
+# if __name__ == '__main__':
+#     runner = Scan('rdgy', True)
+#     print(runner.device_identifier('64'))
