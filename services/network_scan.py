@@ -65,7 +65,7 @@ class Scan:
                         ip_info = f"IP: {ip} <--> Possible(s) OS: {check_ip[1]}"
                         active_ips.append(ip_info)
         else:
-            for i in range(0,3):
+            for i in range(0,256):
                 ip = f"{prefix}.{i}"
                 check_ip = self.ping_ip(ip)
 
