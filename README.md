@@ -18,7 +18,7 @@
 
 🇺🇸 - Before starting, you need to set up a Python development environment. Follow the steps below to configure the virtual environment and install the necessary dependencies.
 
-## Configuração do Ambiente | Environment Setup | Настройка окружения | Configuration de l'environnement
+### Configuração do Ambiente | Environment Setup | Настройка окружения | Configuration de l'environnement
 
 1. **Crie um Ambiente Virtual | Create a Virtual Environment | Создайте виртуальную среду | Créer un environnement virtuel**
 
@@ -30,7 +30,7 @@
 
    🇺🇸 - First, create a virtual environment to isolate the project dependencies. In the terminal, navigate to the project directory and run:
 
-        python3 -m venv venv
+        `python3 -m venv venv`
 
 
     🇧🇷 - Isso criará um novo diretório chamado venv que conterá o ambiente virtual.
@@ -44,10 +44,10 @@
 2. **Ative o Ambiente Virtual | Activate the Virtual Environment | Активируйте виртуальную среду | Activez l'environnement virtuel**
 
     Windows:
-        venv\Scripts\activate
+        `venv\Scripts\activate`
 
     macOS/Linux:
-        source venv/bin/activate
+        `source venv/bin/activate`
 
     🇧🇷 - Após a ativação do ambiente virtual, você verá (venv) no início da linha de comando, indicando que o ambiente está ativo.
 
@@ -67,4 +67,4 @@
 
     🇺🇸 - With the virtual environment activated, install the project dependencies using pip. Run the following command to install all dependencies listed in the requirements.txt file
 
-    pip install -r requirements.txt
+        `pip install -r requirements.txt`
