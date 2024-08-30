@@ -3,7 +3,7 @@ import subprocess
 import datetime
 import json
 import re
-from netbox_service import Netbox
+from .netbox_service import Netbox
 from colorama import Fore, Style
 from pathlib import Path
 
@@ -47,6 +47,7 @@ class Scan:
         active_ips = []
         prefix = '.'.join(self.base_ip.split('.')[:2])
         test_last_2 = True
+        netbox_ip_list = []
         
         if int(self.base_ip.split('.')[2]) != 0 and int(self.base_ip.split('.')[3]) == 0:
             prefix = '.'.join(self.base_ip.split('.')[:3])
@@ -57,19 +58,26 @@ class Scan:
             for i in range(0, 256):
                 for j in range(1, 256):
                     ip = f"{prefix}.{i}.{j}"
-                    check_ip = self.ping_ip(self, ip)
+                    check_ip = self.ping_ip(ip)
 
                     if check_ip[0]:
                         ip_info = f"IP: {ip} <--> Possible(s) OS: {check_ip[1]}"
                         active_ips.append(ip_info)
+
+                        if self.netbox_output:
+                            netbox_ip_list.append(ip)
+
         else:
-            for i in range(0,256):
+            for i in range(0,5):
                 ip = f"{prefix}.{i}"
-                check_ip = self.ping_ip(self, ip)
+                check_ip = self.ping_ip(ip)
 
                 if check_ip[0]:
                     ip_info = f"IP: {ip} <--> Possible(s) OS: {check_ip[1]}"
                     active_ips.append(ip_info)
+
+                    if self.netbox_output:
+                            netbox_ip_list.append(ip)
 
         print(f"{len(active_ips) } active IP(s) found.")
 
@@ -86,8 +94,8 @@ class Scan:
             print(f"Saved in -> {file_name}")
 
         # Send IPs to Netbox
-        if active_ips and self.netbox_output:
-            runner = Netbox(active_ips)
+        if netbox_ip_list and self.netbox_output:
+            runner = Netbox(netbox_ip_list)
             runner.send_ative_ips()
 
 
