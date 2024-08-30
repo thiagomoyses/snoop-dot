@@ -1,6 +1,6 @@
 import argparse
 from services import Scan
-from colorama import init, Fore, Style
+from colorama import Fore, Style
 from pyfiglet import figlet_format
 import sys
 
