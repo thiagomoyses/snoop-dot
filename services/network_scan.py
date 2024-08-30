@@ -2,8 +2,9 @@ import platform
 import subprocess
 import datetime
 import json
+import re
+from colorama import Fore, Style
 from pathlib import Path
-from re import search
 
 class Scan:
     def __init__(self, base_ip, output):
@@ -12,36 +13,32 @@ class Scan:
     
     @staticmethod
     def ping_ip(ip):
-        print(f'Scanning IP: {ip}', end=' ... ')
+        print(Fore.YELLOW + f'Scanning IP: {ip}', end=' ... ' + Style.RESET_ALL)
 
         param = "-n" if platform.system().lower() == "windows" else "-c"
-        ttl_data = ""
         ttl_value = None
         output = False
 
         command = ["ping", param, "1", ip]
-        response = subprocess.Popen(command, stdout=subprocess.PIPE)
-        response.wait()
+        response = subprocess.run(command, capture_output=True, text=True)
+        
+        output_text = response.stdout
 
+        ttl_match = re.search(r"ttl=(\d+)", output_text, flags=re.IGNORECASE)
 
-        for line in response.stdout:
-            ttl_data += str(line, 'utf-8')
-            ttl_match = search(r"TTL=(\d+)", ttl_data)
-
-            if ttl_match:
-                ttl_value = ttl_match.group(1)
-
-
-        if ttl_value:
-            status = "Ativo"
-            status_char = "✔"
+        if ttl_match:
+            ttl_value = ttl_match.group(1)
             output = True
+            status = "Active"
+            status_char = "✔"
+            status_color = Fore.GREEN
         else:
-            status = "Inativo"
+            status = "Inactive"
             status_char = "✘"
+            status_color = Fore.RED
         
-        print(f"{status_char} {status}")
-        
+        print(status_color + f"{status_char} {status}" + Style.RESET_ALL)
+
         return [output, ttl_value]
 
     def scan_network(self):
@@ -65,11 +62,9 @@ class Scan:
                         ip_info = f"IP: {ip} <--> Possible(s) OS: {check_ip[1]}"
                         active_ips.append(ip_info)
         else:
-            for i in range(0,256):
+            for i in range(114,117):
                 ip = f"{prefix}.{i}"
                 check_ip = self.ping_ip(ip)
-
-                print(check_ip[0])
 
                 if check_ip[0]:
                     ip_info = f"IP: {ip} <--> Possible(s) OS: {check_ip[1]}"
