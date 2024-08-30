@@ -30,7 +30,7 @@
 
    🇺🇸 - First, create a virtual environment to isolate the project dependencies. In the terminal, navigate to the project directory and run:
 
-        `python3 -m venv venv`
+        python3 -m venv venv
 
 
     🇧🇷 - Isso criará um novo diretório chamado venv que conterá o ambiente virtual.
@@ -67,4 +67,4 @@
 
     🇺🇸 - With the virtual environment activated, install the project dependencies using pip. Run the following command to install all dependencies listed in the requirements.txt file
 
-        `pip install -r requirements.txt`
+        pip install -r requirements.txt
