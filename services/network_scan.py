@@ -12,7 +12,7 @@ class Scan:
         self.output = output
     
     @staticmethod
-    def ping_ip(ip):
+    def ping_ip(self, ip):
         print(Fore.YELLOW + f'Scanning IP: {ip}', end=' ... ' + Style.RESET_ALL)
 
         param = "-n" if platform.system().lower() == "windows" else "-c"
@@ -27,7 +27,7 @@ class Scan:
         ttl_match = re.search(r"ttl=(\d+)", output_text, flags=re.IGNORECASE)
 
         if ttl_match:
-            ttl_value = ttl_match.group(1)
+            ttl_value = self.device_identifier(ttl_match.group(1))
             output = True
             status = "Active"
             status_char = "✔"
@@ -56,7 +56,7 @@ class Scan:
             for i in range(0, 256):
                 for j in range(1, 256):
                     ip = f"{prefix}.{i}.{j}"
-                    check_ip = self.ping_ip(ip)
+                    check_ip = self.ping_ip(self, ip)
 
                     if check_ip[0]:
                         ip_info = f"IP: {ip} <--> Possible(s) OS: {check_ip[1]}"
@@ -64,7 +64,7 @@ class Scan:
         else:
             for i in range(114,117):
                 ip = f"{prefix}.{i}"
-                check_ip = self.ping_ip(ip)
+                check_ip = self.ping_ip(self, ip)
 
                 if check_ip[0]:
                     ip_info = f"IP: {ip} <--> Possible(s) OS: {check_ip[1]}"
@@ -84,7 +84,8 @@ class Scan:
                     f.write(f"{ip}\n")
             print(f"Saved in -> {file_name}")
 
-    def device_identifier(self, TTL):
+    @staticmethod
+    def device_identifier(TTL):
         
         project_root = Path(__file__).resolve().parent.parent
         ttl_list_path = project_root/"resources"/"ttl_list.json"
