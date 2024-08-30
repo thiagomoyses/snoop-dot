@@ -3,15 +3,16 @@ import subprocess
 import datetime
 import json
 import re
+from netbox_service import Netbox
 from colorama import Fore, Style
 from pathlib import Path
 
 class Scan:
-    def __init__(self, base_ip, output):
+    def __init__(self, base_ip, output, netbox_output):
         self.base_ip = base_ip
         self.output = output
+        self.netbox_output = netbox_output
     
-    @staticmethod
     def ping_ip(self, ip):
         print(Fore.YELLOW + f'Scanning IP: {ip}', end=' ... ' + Style.RESET_ALL)
 
@@ -83,6 +84,12 @@ class Scan:
                 for ip in active_ips:
                     f.write(f"{ip}\n")
             print(f"Saved in -> {file_name}")
+
+        # Send IPs to Netbox
+        if active_ips and self.netbox_output:
+            runner = Netbox(active_ips)
+            runner.send_ative_ips()
+
 
     @staticmethod
     def device_identifier(TTL):

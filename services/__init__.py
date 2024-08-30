@@ -1,1 +1,2 @@
-from .network_scan import Scan
+from .network_scan_service import Scan
+from .netbox_service import Netbox
