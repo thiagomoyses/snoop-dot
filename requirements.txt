@@ -1,9 +1,14 @@
+certifi==2024.8.30
+charset-normalizer==3.3.2
 colorama==0.4.6
+idna==3.8
 MouseInfo==0.1.3
+packaging==24.1
 PyAutoGUI==0.9.54
 pyfiglet==1.0.2
 PyGetWindow==0.0.9
 PyMsgBox==1.0.9
+pynetbox==7.4.0
 pynput==1.7.7
 pyobjc-core==10.3.1
 pyobjc-framework-ApplicationServices==10.3.1
@@ -13,7 +18,10 @@ pyobjc-framework-Quartz==10.3.1
 pyperclip==1.9.0
 PyRect==0.2.0
 PyScreeze==0.1.30
+python-dotenv==1.0.1
 pytweening==1.2.0
+requests==2.32.3
 rubicon-objc==0.4.9
 scapy==2.5.0
 six==1.16.0
+urllib3==2.2.2
