@@ -6,8 +6,8 @@ class Menu:
 
     def __init__(self):
         self.main_options = [
-            "IP-SNIFFER",
-            "DIRECTORY BRUTE-FORCE"
+            "DIRECTORY BRUTE-FORCE",
+            "IP-SNIFFER"
         ]
 
     def main_menu(self):
