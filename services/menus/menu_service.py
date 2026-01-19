@@ -17,12 +17,11 @@ class Menu:
         print()
 
         output_file = False
-        netbox_output = False
+
         
         parser = argparse.ArgumentParser(description="Scan network looking for active IPs")
         parser.add_argument("base_ip", help="The ip base to be scanned, with the following format x.x.0.0 (ex: 192.168.0.0)")
         parser.add_argument("--output", help="Output the scan results to a file")
-        parser.add_argument("--netbox", help="Output the scan results to Netbox")
         args = parser.parse_args()
 
         if args.output:
@@ -35,15 +34,5 @@ class Menu:
                 parser.print_help()
                 sys.exit(1)
 
-        if args.netbox:
-            if args.netbox == 'true':
-                netbox_output = True
-            elif args.netbox == 'false':
-                netbox_output = False
-            else:
-                print(Fore.RED + "Invalid value for --netbox. Accepted values are 'true' or 'false'." + Style.RESET_ALL)
-                parser.print_help()
-                sys.exit(1) 
-
-        scanner = Scan(args.base_ip, output_file, netbox_output)
+        scanner = Scan(args.base_ip, output_file)
         scanner.scan_network()

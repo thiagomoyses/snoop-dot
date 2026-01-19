@@ -8,7 +8,6 @@ PyAutoGUI==0.9.54
 pyfiglet==1.0.2
 PyGetWindow==0.0.9
 PyMsgBox==1.0.9
-pynetbox==7.4.0
 pynput==1.7.7
 pyobjc-core==10.3.1
 pyobjc-framework-ApplicationServices==10.3.1
